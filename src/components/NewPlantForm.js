@@ -14,10 +14,10 @@ function NewPlantForm({ addPlant }) {
       price: parseFloat(price),
     };
 
-    // Call addPlant to add the new plant to the list
+    
     addPlant(newPlant);
 
-    // Reset form fields
+    
     setName('');
     setImage('');
     setPrice('');
