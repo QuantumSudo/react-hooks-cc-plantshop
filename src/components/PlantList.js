@@ -4,7 +4,7 @@ import PlantCard from './PlantCard';
 
 function PlantList({ plants, markAsSoldOut }) {
   return (
-    <div className="cards"> {/* Apply the 'cards' class for grid layout */}
+    <div className="cards"> 
       {plants.map((plant) => (
         <PlantCard
           key={plant.id}
