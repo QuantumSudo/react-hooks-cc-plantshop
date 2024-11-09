@@ -1,23 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 function PlantCard({ plant, markAsSoldOut }) {
-  const [soldOut, setSoldOut] = useState(plant.soldOut || false);
-
-  const handleMarkSoldOut = () => {
-    setSoldOut(true);
-    markAsSoldOut(plant.id);
-  };
-
   return (
-    <div className="plant-card">
-      <h3>{plant.name}</h3>
+    <div className="card">
       <img src={plant.image} alt={plant.name} />
-      <p>Price: ${plant.price}</p>
-      {soldOut ? (
-        <p style={{ color: 'red' }}>Sold Out</p>
-      ) : (
-        <button onClick={handleMarkSoldOut}>Mark as Sold Out</button>
-      )}
+      <h3>{plant.name}</h3>
+      <p>${plant.price}</p>
+      <button onClick={() => markAsSoldOut(plant.id)}>
+        {plant.soldOut ? 'Sold Out' : 'Mark as Sold Out'}
+      </button>
     </div>
   );
 }
