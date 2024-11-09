@@ -1,9 +1,10 @@
 import React from 'react';
 import PlantCard from './PlantCard';
 
+
 function PlantList({ plants, markAsSoldOut }) {
   return (
-    <div className="cards">
+    <div className="cards"> {/* Apply the 'cards' class for grid layout */}
       {plants.map((plant) => (
         <PlantCard
           key={plant.id}
