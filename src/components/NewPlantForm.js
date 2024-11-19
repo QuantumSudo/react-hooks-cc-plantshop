@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 
-function NewPlantForm() {
+function NewPlantForm({ setPlants }) {
+  // Initial state for the form fields
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [price, setPrice] = useState("");
 
+  // Handle form submission
   const handleSubmit = (e) => {
-    e.preventDefault();
-  
-    // Ensure price is a string before sending it in the request
+    e.preventDefault(); // Prevent page reload on form submit
+
+    // Ensure price is a valid number
     const newPlant = {
       name,
       image,
-      price: price.toString(),  // Convert price to string
+      price: parseFloat(price), // Convert price to a number
     };
-  
+
+    // Make a POST request to add the new plant to the database
     fetch("http://localhost:6001/plants", {
       method: "POST",
       headers: {
@@ -24,40 +27,43 @@ function NewPlantForm() {
     })
       .then((response) => response.json())
       .then((data) => {
-        // handle the response if necessary
+        // Add the new plant to the current list of plants
+        setPlants((prevPlants) => [...prevPlants, data]);
+      })
+      .catch((error) => {
+        console.error("Error adding new plant:", error);
       });
-  
-    // Reset the form
+
+    // Reset form fields after submission
     setName("");
     setImage("");
     setPrice("");
   };
-  
 
   return (
     <div className="new-plant-form">
       <h2>New Plant</h2>
       <form onSubmit={handleSubmit}>
         <input
-          type="text"
           name="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
           placeholder="Plant name"
-        />
-        <input
           type="text"
-          name="image"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
-          placeholder="Image URL"
+          value={name}
+          onChange={(e) => setName(e.target.value)} // Update name state
         />
         <input
-          type="number"
+          name="image"
+          placeholder="Image URL"
+          type="text"
+          value={image}
+          onChange={(e) => setImage(e.target.value)} // Update image state
+        />
+        <input
           name="price"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
           placeholder="Price"
+          type="number"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)} // Update price state
         />
         <button type="submit">Add Plant</button>
       </form>
